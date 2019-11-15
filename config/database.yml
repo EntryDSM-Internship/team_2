@@ -50,6 +50,6 @@ test:
 production:
   <<: *default
   database: minitweet_production
-  username: minitweet
+  username: root
   password: <%= ENV['MINITWEET_DATABASE_PASSWORD'] %>
   socket: /var/lib/mysql/mysql.sock
