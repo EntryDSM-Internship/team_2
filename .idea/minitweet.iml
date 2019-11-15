@@ -902,6 +902,46 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="passenger (vbundled(6.0.4)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/bin" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/dev" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/doc" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/man" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/src" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/build" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/images" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/resources" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/download_cache" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/bin" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/dev" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/doc" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/man" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/src" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/build" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/images" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/resources" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/download_cache" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/bin" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/dev" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/doc" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/man" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/src" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/build" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/images" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/resources" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/passenger-6.0.4/download_cache" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="public_suffix (vbundled(4.0.1)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
