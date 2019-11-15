@@ -52,4 +52,4 @@ production:
   database: minitweet_production
   username: minitweet
   password: <%= ENV['MINITWEET_DATABASE_PASSWORD'] %>
-  socket: /var/lib/mysql
+  socket: /var/lib/mysql/mysql.sock
