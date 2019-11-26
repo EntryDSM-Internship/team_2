@@ -231,6 +231,27 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="bcrypt (vbundled(3.1.13)) [path][gem]" type="rubylib">
+        <properties>
+          <option name="version" value="4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/ext" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/lib" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/spec" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/ext" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/lib" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/ext" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/bcrypt-3.1.13/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="bootsnap (vbundled(1.4.5)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -344,30 +365,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="domain_name (vbundled(0.5.20190701)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/test" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/tool" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/test" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/tool" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/test" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/domain_name-0.5.20190701/tool" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="erubi (vbundled(1.9.0)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -444,37 +441,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="http-accept (vbundled(1.7.0)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-accept-1.7.0/lib" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-accept-1.7.0/lib" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="http-cookie (vbundled(1.0.3)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-cookie-1.0.3/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-cookie-1.0.3/test" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-cookie-1.0.3/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-cookie-1.0.3/test" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/http-cookie-1.0.3/test" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="i18n (vbundled(1.7.0)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -498,39 +464,6 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/image_processing-1.9.3/lib" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="json (vbundled(2.2.0)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/java" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tests" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tools" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/diagrams" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/references" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/java" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tests" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tools" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/diagrams" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/references" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/java" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tests" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/tools" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/diagrams" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/json-2.2.0/references" />
-        </excluded>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -599,19 +532,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="mailgun_rails (vbundled(0.9.0)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mailgun_rails-0.9.0/lib" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mailgun_rails-0.9.0/lib" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="marcel (vbundled(0.3.3)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
@@ -639,45 +559,6 @@
         </SOURCES>
         <excluded>
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/method_source-0.9.2/spec" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="mime-types (vbundled(3.3)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-3.3/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-3.3/test" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-3.3/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-3.3/test" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-3.3/test" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="mime-types-data (vbundled(3.2019.1009)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/types" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/types" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mime-types-data-3.2019.1009/types" />
         </excluded>
       </library>
     </orderEntry>
@@ -826,27 +707,6 @@
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mysql2-0.5.2/spec" />
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mysql2-0.5.2/support" />
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/mysql2-0.5.2/examples" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="netrc (vbundled(0.11.0)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/test" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/test" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/data" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/netrc-0.11.0/test" />
         </excluded>
       </library>
     </orderEntry>
@@ -1023,20 +883,20 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="rack-cors (vbundled(1.0.4)) [path][gem]" type="rubylib">
+      <library name="rack-cors (vbundled(1.0.6)) [path][gem]" type="rubylib">
         <properties>
           <option name="version" value="4" />
         </properties>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.4/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.4/test" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.6/lib" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.6/test" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.4/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.4/test" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.6/lib" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.6/test" />
         </SOURCES>
         <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.4/test" />
+          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rack-cors-1.0.6/test" />
         </excluded>
       </library>
     </orderEntry>
@@ -1197,27 +1057,6 @@
         </SOURCES>
         <excluded>
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/ref-2.0.0/ext" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="rest-client (vbundled(2.1.0)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/bin" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/spec" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/bin" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/spec" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/bin" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/rest-client-2.1.0/spec" />
         </excluded>
       </library>
     </orderEntry>
@@ -1403,45 +1242,6 @@
         </SOURCES>
         <excluded>
           <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/tzinfo-1.2.5/test" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="unf (vbundled(0.1.4)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf-0.1.4/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf-0.1.4/test" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf-0.1.4/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf-0.1.4/test" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf-0.1.4/test" />
-        </excluded>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="unf_ext (vbundled(0.0.7.6)) [path][gem]" type="rubylib">
-        <properties>
-          <option name="version" value="4" />
-        </properties>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/test" />
-        </CLASSES>
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/lib" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/test" />
-        </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/ext" />
-          <root url="file://$MODULE_DIR$/path/ruby/2.6.0/gems/unf_ext-0.0.7.6/test" />
         </excluded>
       </library>
     </orderEntry>
