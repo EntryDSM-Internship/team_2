@@ -6,15 +6,31 @@ class UsersController < ApplicationController
 
   end
 
-  def update
-
-  end
-
-  def destroy
+  def show_many
 
   end
 
   def create
+
+  end
+
+  def signup_emailcheck_get
+
+  end
+
+  def signup_emailcheck_post
+
+  end
+
+  def edit_emailcheck_get
+
+  end
+
+  def edit_emailcheck_post
+
+  end
+
+  def update
 
   end
 
