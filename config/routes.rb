@@ -3,12 +3,13 @@ Rails.application.routes.draw do
   # users controller
   resource :user, controller: 'users', except: %i[show create destroy], param: :userId
   get '/user/:userId', to: 'users#show'
-  post '/signup', to: 'users#create'
   get '/users', to: 'users#show_many'
-  get '/signup/emailcheck', to: 'users#signup_emailcheck_get'
-  post '/signup/emailcheck', to: 'users#signup_emailcheck_post'
-  get '/edit/emailcheck', to: 'users#edit_emailcheck_get'
-  post '/edit/emailcheck', to: 'users#edit_emailcheck_post'
+  post '/signup', to: 'users#create'
+  post '/signup/complete', to: 'users#create_complete'
+  get '/emailcheck', to: 'users#emailcheck_get'
+  post '/emailcheck', to: 'users#emailcheck_post'
+  get '/edit/emailcheck', to: 'users#edit_emailcheck'
+  post '/edit/emailcheck/complete', to: 'users#edit_emailcheck_complete'
 
   # follows controller
   get '/follower', to: 'follows#follower_get'

@@ -29,4 +29,13 @@ class ApplicationController < ActionController::API
     return render status: 410 if payload['err'] == 410
     return render status: 403 unless payload['type'] == 'refresh_token'
   end
+
+  def create_auth_code
+    auth_code = ''
+    array = ('a'..'z').to_a + (0..9).to_a
+    6.times do
+      auth_code += array[rand(35)].to_s
+    end
+    auth_code
+  end
 end
