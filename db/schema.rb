@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_135928) do
+ActiveRecord::Schema.define(version: 2019_12_03_024427) do
+
+  create_table "change_passwords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.boolean "verified", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "tweet_id", null: false
@@ -36,10 +43,18 @@ ActiveRecord::Schema.define(version: 2019_11_25_135928) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "temp_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "auth_code"
+    t.boolean "verified", default: false
+  end
+
   create_table "tweet_imgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "tweet_id", null: false
+    t.bigint "tweet_id", default: 0, null: false
     t.string "source", null: false
-    t.boolean "if_profile", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tweet_id"], name: "index_tweet_imgs_on_tweet_id"
@@ -58,9 +73,10 @@ ActiveRecord::Schema.define(version: 2019_11_25_135928) do
     t.string "email", null: false
     t.string "name", null: false
     t.string "password_digest", null: false
-    t.string "profile_img", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "profile_img"
+    t.boolean "verified", default: false
   end
 
   add_foreign_key "comments", "tweets"

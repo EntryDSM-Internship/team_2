@@ -25,11 +25,15 @@ class JwtExtended < ApplicationRecord
     JWT.encode(payload, @@secret_key, @@algorithm)
   end
 
+
   def get_jwt_payload(token)
+    token = token.to_s
     begin
       payload = JWT.decode(token, @@secret_key, @@algorithm)
     rescue JWT::ExpiredSignature
       return { 'err' => 410 }
+    rescue JWT::DecodeError
+      return nil
     end
     payload[0]
   end
