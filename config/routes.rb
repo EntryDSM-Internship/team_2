@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # set root
+  root 'root#root'
+
   # users controller
   resource :user, controller: 'users', except: %i[show create destroy], param: :userId
   get '/user/:userId', to: 'users#show'
