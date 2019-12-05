@@ -128,7 +128,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    unless params[:newName].blank? || params[:newPassword].blank?
+    if params[:newName].blank? && params[:newPassword].blank?
       return render status: 400
     end
 
