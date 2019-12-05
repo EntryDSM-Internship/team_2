@@ -16,7 +16,7 @@ class AuthsController < ApplicationController
   end
 
   def update
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     render json: { access_token: @@jwt_extended.create_access_token(payload) },
            status: 200
   end

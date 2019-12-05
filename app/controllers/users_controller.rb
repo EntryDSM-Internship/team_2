@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required, only: %i[show
+  before_action :jwt_required, only: %i[
                                         show_many
                                         edit_emailcheck
                                         edit_emailcheck_complete
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
   end
 
   def edit_emailcheck
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     auth_code = create_auth_code
     AuthMailer.send_auth_code(User.find_by_id(payload['user_id']).email,
                               auth_code).deliver_later
@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     return render status: 400 if params[:authCode].blank?
     return render status: 412 unless params[:authCode] == payload['auth_code']
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
     user = User.find_by_id(payload['user_id'])
 
@@ -119,7 +119,7 @@ class UsersController < ApplicationController
       return render status: 408
     end
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
     user.verified = true
     user.save
@@ -132,7 +132,7 @@ class UsersController < ApplicationController
       return render status: 400
     end
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
 
     if params[:newName]

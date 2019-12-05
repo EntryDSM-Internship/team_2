@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
   def jwt_required
     begin
-      token = request.authorization[7..]
+      token = request.authorization
     rescue NoMethodError
       return render status: 401
     end
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
 
   def refresh_token_required
     begin
-      token = request.authorization[7..]
+      token = request.authorization
     rescue NoMethodError
       return render status: 401
     end
