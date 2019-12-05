@@ -103,7 +103,8 @@ class UsersController < ApplicationController
     auth_code = create_auth_code
     AuthMailer.send_auth_code(User.find_by_id(payload['user_id']).email,
                               auth_code).deliver_later
-    render json: { access_code: @@jwt_extended.create_access_token(payload['auth_code'] += auth_code) },
+    payload['auth_code'] = auth_code
+    render json: { access_code: @@jwt_extended.create_access_token(payload) },
            status: 200
   end
 
