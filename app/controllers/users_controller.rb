@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   def emailcheck_get
     return render status: 400 if params[:email].blank?
 
-    if !User.find_by_email(params[:email])
+    if User.find_by_email(params[:email]).blank?
       render status: 204
     else
       render status: 409
