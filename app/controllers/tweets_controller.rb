@@ -15,7 +15,8 @@ class TweetsController < ApplicationController
 
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
-    user.tweets.create!(params[:content])
+    user.tweets.create!(content: params[:content])
+    render json: 201
   end
 
   def destroy

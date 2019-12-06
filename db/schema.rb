@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_103343) do
+ActiveRecord::Schema.define(version: 2019_12_06_082036) do
 
   create_table "change_passwords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
@@ -30,10 +30,11 @@ ActiveRecord::Schema.define(version: 2019_12_05_103343) do
   end
 
   create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "follower_id", null: false
-    t.bigint "following_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "following_id"
+    t.integer "follower_id"
+    t.index ["follower_id", "following_id"], name: "index_follows_on_follower_id_and_following_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
     t.index ["following_id"], name: "index_follows_on_following_id"
   end
@@ -65,7 +66,9 @@ ActiveRecord::Schema.define(version: 2019_12_05_103343) do
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id_id", null: false
     t.index ["user_id"], name: "index_tweets_on_user_id"
+    t.index ["user_id_id"], name: "index_tweets_on_user_id_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -76,12 +79,11 @@ ActiveRecord::Schema.define(version: 2019_12_05_103343) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "profile_img"
     t.boolean "verified", default: false
+    t.timestamp "sended_at"
   end
 
   add_foreign_key "comments", "tweets"
   add_foreign_key "comments", "users"
-  add_foreign_key "follows", "users", column: "follower_id"
-  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "tweet_imgs", "tweets"
   add_foreign_key "tweets", "users"
 end

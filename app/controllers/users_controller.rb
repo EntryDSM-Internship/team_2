@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 
     temp_user = TempUser.find_by_auth_code(params[:authCode])
 
-    if temp_user.created_at.to_i + 10.minutes.to_i < Time.now.to_i
+    if temp_user.updated_at.to_i + 10.minutes.to_i < Time.now.to_i
       return render status: 408
     end
 
@@ -101,8 +101,11 @@ class UsersController < ApplicationController
   def edit_emailcheck
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     auth_code = create_auth_code
-    AuthMailer.send_auth_code(User.find_by_id(payload['user_id']).email,
+    user = User.find_by_id(payload['user_id'])
+    AuthMailer.send_auth_code(user.email,
                               auth_code).deliver_later
+    user.sended_at = Time.now
+    user.save
     payload['auth_code'] = auth_code
     render json: { access_code: @@jwt_extended.create_access_token(payload) },
            status: 200
@@ -116,12 +119,10 @@ class UsersController < ApplicationController
 
     user = User.find_by_id(payload['user_id'])
 
-    if user.created_at.to_i + 10.minutes.to_i < Time.now.to_i
+    if user.sended_at.to_i + 10.minutes.to_i < Time.now.to_i
       return render status: 408
     end
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization)
-    user = User.find_by_id(payload['user_id'])
     user.verified = true
     user.save
 
