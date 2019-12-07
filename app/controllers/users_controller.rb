@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def show_many
     return render status: 400 unless params[:name]
 
-    user_list = Hash.new
+    user_list = {}
     cnt = 1
     User.where('name LIKE ?', "%#{params[:name]}%").each do |user|
       user_list[cnt] = { user_id: user.id, name: user.name }
