@@ -17,14 +17,12 @@ class UsersController < ApplicationController
   def show_many
     return render status: 400 unless params[:name]
 
-    user_list = {}
-    cnt = 1
+    user_list = []
     User.where('name LIKE ?', "%#{params[:name]}%").each do |user|
-      user_list[cnt] = { user_id: user.id, name: user.name }
-      cnt += 1
+      user_list.append(user_id: user.id, name: user.name)
     end
 
-    render status: 404 if user_list.blank?
+    render status: 404 unless user_list
     render json: user_list, status: 200
   end
 
@@ -51,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   def emailcheck_get
-    return render status: 400 if params[:email].blank?
+    return render status: 400 unless params[:email]
 
     if User.find_by_email(params[:email]).blank?
       render status: 204
@@ -61,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def emailcheck_post
-    return render status: 400 if params[:authCode].blank?
+    return render status: 400 unless params[:authCode]
 
     temp_user = TempUser.find_by_auth_code(params[:authCode])
 
@@ -84,7 +82,7 @@ class UsersController < ApplicationController
     end
 
     temp_user = TempUser.find_by_id(params[:tempUserId])
-    return render status: 404 if temp_user.nil?
+    return render status: 404 unless temp_user
 
     if temp_user.verified
       User.create!(name: temp_user.name,
@@ -112,7 +110,7 @@ class UsersController < ApplicationController
   end
 
   def edit_emailcheck_complete
-    return render status: 400 if params[:authCode].blank?
+    return render status: 400 unless params[:authCode]
     return render status: 412 unless params[:authCode] == payload['auth_code']
 
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
@@ -139,7 +137,6 @@ class UsersController < ApplicationController
 
     if params[:newName]
       user.name = params[:newName]
-      user.save
     end
 
     if params[:newPassword]
@@ -147,9 +144,15 @@ class UsersController < ApplicationController
 
       user.password = params[:newPassword]
       user.verified = false
-      user.save
     end
 
+    if params[:newProfileImg]
+      user.profile_img = params[:newProfileImg]
+    else
+      user.profile_img = ''
+    end
+
+    user.save
     render status: 200
   end
 end

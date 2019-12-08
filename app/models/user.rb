@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :tweets
+  has_many :tweets, dependent: :delete_all
   has_many :comments
   has_many :follower_relations, foreign_key: 'following_id', class_name: 'Follow'
   has_many :followers, through: :follower_relations, source: :follower
@@ -8,4 +8,5 @@ class User < ApplicationRecord
   has_many :followings, through: :following_relations, source: :following
 
   has_secure_password
+  mount_uploader :profile_img, ImageUploader
 end

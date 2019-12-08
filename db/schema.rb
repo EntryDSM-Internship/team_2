@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_06_082036) do
+ActiveRecord::Schema.define(version: 2019_12_08_131305) do
 
   create_table "change_passwords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
@@ -54,21 +54,19 @@ ActiveRecord::Schema.define(version: 2019_12_06_082036) do
   end
 
   create_table "tweet_imgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "tweet_id", default: 0, null: false
     t.string "source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tweet_id"
     t.index ["tweet_id"], name: "index_tweet_imgs_on_tweet_id"
   end
 
   create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id_id", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
-    t.index ["user_id_id"], name: "index_tweets_on_user_id_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -84,6 +82,6 @@ ActiveRecord::Schema.define(version: 2019_12_06_082036) do
 
   add_foreign_key "comments", "tweets"
   add_foreign_key "comments", "users"
-  add_foreign_key "tweet_imgs", "tweets"
-  add_foreign_key "tweets", "users"
+  add_foreign_key "tweet_imgs", "tweets", on_delete: :cascade
+  add_foreign_key "tweets", "users", on_delete: :cascade
 end
