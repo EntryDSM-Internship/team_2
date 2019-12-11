@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   post '/edit/emailcheck/complete', to: 'users#edit_emailcheck_complete'
 
   # follows controller
+  put '/follow/:followId', to: 'follows#update'
+  patch '/follow/:followId', to: 'follows#update'
+  get '/follow/status', to: 'follows#follow_status_get'
   get '/follower', to: 'follows#follower_get'
   get '/following', to: 'follows#following_get'
   post '/following', to: 'follows#following_post'
@@ -27,9 +30,9 @@ Rails.application.routes.draw do
   get '/tweets/:userId', to: 'tweets#show_many'
 
   # image controller
-  resources :image, controller: 'images', only: %i[show create], param: :imageId
+  resources :image, controller: 'images', only: %i[show], param: :imageId
   get '/images/:tweetId', to: 'images#show_many'
 
   # comment controller
-  resources :comment, controller: 'comments', only: %i[create destroy], param: :commentId
+  resources :comment, controller: 'comments', only: %i[show create destroy], param: :commentId
 end

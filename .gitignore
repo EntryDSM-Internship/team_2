@@ -11,18 +11,25 @@
 /.idea
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+/log/*.log
+/tmp
 !/log/.keep
 !/tmp/.keep
+.ruby-version
+/Gemfile
+/public/uploads
 
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 .byebug_history
+/log
+/path
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
 # Ignore application configuration
 /config/application.yml
+
+.idea

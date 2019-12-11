@@ -11,7 +11,6 @@ class UsersController < ApplicationController
     #
     # user = User.find_by_id(params[:userId])
     # return render status: 404 unless user
-    # TO BE CONTINUED
   end
 
   def show_many

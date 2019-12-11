@@ -4,31 +4,55 @@ class FollowsController < ApplicationController
 
   def follower_get
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
-    follower_users = {}
-    cnt = 1
+    follower_users = []
 
-    follower_users_hash = Follow.where(following_id: payload['user_id'])
+    follower_users_hash = Follow.where(follower_id: payload['user_id'],
+                                       accepted: true)
     follower_users_hash.each do |follower_user|
-      follower_users[cnt] = follower_user.follower_id
-      cnt += 1
+      follower_users.append(follower_user.follower_id)
     end
 
-    render json: follower_users,
+    render json: { follower_users: follower_users },
            status: 200
   end
 
   def following_get
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
-    following_users = {}
-    cnt = 1
+    following_users = []
 
-    following_users_hash = Follow.where(following_id: payload['user_id'])
+    following_users_hash = Follow.where(following_id: payload['user_id'],
+                                        accepted: true)
     following_users_hash.each do |following_user|
-      following_users[cnt] = following_user.follower_id
-      cnt += 1
+      following_users.append(following_user.follower_id)
     end
 
-    render json: following_users,
+    render json: { following_users: following_users },
+           status: 200
+  end
+
+  def follow_status_get
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    following_list = []
+    begin
+      Follow.where(following_id: payload['user_id'], accepted: false).each do |following|
+        following_list.append(following.id)
+      end
+    rescue NoMethodError
+      following_list = nil
+    end
+
+    follower_list = []
+    begin
+    Follow.where(follower_id: payload['user_id'], accepted: false).each do |follower|
+      follower_list.append(follower.id)
+    end
+    rescue NoMethodError
+      follower_list = nil
+    end
+
+    render json: { following: following_list,
+                   follower: follower_list },
            status: 200
   end
 
@@ -44,5 +68,20 @@ class FollowsController < ApplicationController
       return render status: 409
     end
     render status: 201
+  end
+
+  def update
+    return render status: 400 if params[:accepted].nil?
+
+    follow = Follow.find_by_id(params[:tweetId])
+    return render status: 404 unless follow
+
+    if params[:accepted]
+      follow.accepted = true
+      follow.save
+    else
+      follow.destroy!
+    end
+    render status: 204
   end
 end

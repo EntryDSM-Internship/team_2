@@ -1,5 +1,5 @@
 class TweetImg < ApplicationRecord
-  belongs_to :tweet, dependent: :destroy
+  belongs_to :tweet
 
   mount_uploader :source, ImageUploader
 end

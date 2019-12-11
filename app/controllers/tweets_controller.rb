@@ -35,7 +35,6 @@ class TweetsController < ApplicationController
     end
 
     render json: { tweets: tweets }
-
   end
 
   def create
