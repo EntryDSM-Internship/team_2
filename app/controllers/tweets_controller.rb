@@ -70,4 +70,21 @@ class TweetsController < ApplicationController
 
     render status: 200
   end
+<<<<<<< Updated upstream
+=======
+
+  def like_post
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+    user = User.find_by_id(payload['user_id'])
+    tweet = Tweet.find_by_id(params[:tweetId])
+
+    return render status: 404 unless tweet
+
+    begin
+      tweet.likes.create!(user_id: user.id)
+    rescue ActiveRecordError::RecordNotUnique
+      tweet.likes.find_by_user_id(user.id).destroy!
+    end
+  end
+>>>>>>> Stashed changes
 end
