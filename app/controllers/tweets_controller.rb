@@ -70,8 +70,6 @@ class TweetsController < ApplicationController
 
     render status: 200
   end
-<<<<<<< Updated upstream
-=======
 
   def like_post
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
@@ -86,5 +84,4 @@ class TweetsController < ApplicationController
       tweet.likes.find_by_user_id(user.id).destroy!
     end
   end
->>>>>>> Stashed changes
 end
