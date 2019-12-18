@@ -16,8 +16,6 @@
 !/log/.keep
 !/tmp/.keep
 .ruby-version
-/Gemfile
-/public/uploads
 
 # Ignore uploaded files in development.
 /storage/*
@@ -25,11 +23,13 @@
 .byebug_history
 /log
 /path
+/public/uploads
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
 # Ignore application configuration
 /config/application.yml
+.DS_store
 
 .idea

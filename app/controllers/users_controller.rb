@@ -7,10 +7,16 @@ class UsersController < ApplicationController
                                         update]
 
   def show
-    # return render status: 400 unless params[:userId]
-    #
-    # user = User.find_by_id(params[:userId])
-    # return render status: 404 unless user
+    user = User.find_by_id(params[:userId])
+    return render status: 404 unless user
+
+    render json: { name: user.name,
+                   email: user.email,
+                   following: Follow.find_by_following_id(params[:userId]).count,
+                   follower: Follow.find_by_follower_id(params[:userId]).count,
+                   profile_img: user.profile_img,
+                   tweets: user.tweets.ids[0..9] },
+           status: 200
   end
 
   def show_many

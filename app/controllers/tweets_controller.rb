@@ -19,7 +19,7 @@ class TweetsController < ApplicationController
     render json: { user_profile_img: tweet.user.profile_img,
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
-                   imgs: imgs,
+                   images: imgs,
                    like: '',
                    comments: comments },
            status: 200
@@ -69,5 +69,17 @@ class TweetsController < ApplicationController
     end
 
     render status: 200
+  end
+
+  def like_post
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+    user = User.find_by_id(payload['user_id'])
+    tweet = Tweet.find_by_id(params[:tweetId])
+
+    begin
+      tweet.likes.create!(user_id: user.id)
+    rescue ActiveRecordError::RecordNotUnique
+      tweet.likes.find_by_user_id(user.id).destroy!
+    end
   end
 end
