@@ -20,7 +20,7 @@ class TweetsController < ApplicationController
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
                    images: imgs,
-                   like: '',
+                   like: tweet.likes.count,
                    comments: comments },
            status: 200
   end
