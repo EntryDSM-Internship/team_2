@@ -76,6 +76,8 @@ class TweetsController < ApplicationController
     user = User.find_by_id(payload['user_id'])
     tweet = Tweet.find_by_id(params[:tweetId])
 
+    return render status: 404 unless tweet
+    
     begin
       tweet.likes.create!(user_id: user.id)
     rescue ActiveRecordError::RecordNotUnique
