@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   # tweet controller
   resources :tweet, controller: 'tweets', only: %i[show create destroy], param: :tweetId
+  post '/like/:tweetId', to: 'tweets#like_post'
   get '/tweets/:userId', to: 'tweets#show_many'
 
   # image controller

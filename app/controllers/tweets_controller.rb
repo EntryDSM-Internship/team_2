@@ -19,7 +19,7 @@ class TweetsController < ApplicationController
     render json: { user_profile_img: tweet.user.profile_img,
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
-                   imgs: imgs,
+                   images: imgs,
                    like: '',
                    comments: comments },
            status: 200
@@ -77,7 +77,7 @@ class TweetsController < ApplicationController
     tweet = Tweet.find_by_id(params[:tweetId])
 
     return render status: 404 unless tweet
-
+    
     begin
       tweet.likes.create!(user_id: user.id)
     rescue ActiveRecordError::RecordNotUnique
