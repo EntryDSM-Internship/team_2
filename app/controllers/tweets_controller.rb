@@ -26,11 +26,13 @@ class TweetsController < ApplicationController
   end
 
   def show_many
+    return render status: 400 unless params[:page]
+
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
 
     tweets = []
-    user.tweets.order(created_at: :desc).limit(10).each do |tweet|
+    user.tweets.order(created_at: :desc).limit(10 * params[:page]).each do |tweet|
       tweets.append(tweet.id)
     end
 
@@ -77,7 +79,7 @@ class TweetsController < ApplicationController
     tweet = Tweet.find_by_id(params[:tweetId])
 
     return render status: 404 unless tweet
-    
+
     begin
       tweet.likes.create!(user_id: user.id)
     rescue ActiveRecordError::RecordNotUnique

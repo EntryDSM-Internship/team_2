@@ -12,13 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2019_12_18_124706) do
 
-  create_table "change_passwords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user_id"
-    t.boolean "verified", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "tweet_id", null: false
     t.bigint "user_id", null: false
@@ -65,18 +58,18 @@ ActiveRecord::Schema.define(version: 2019_12_18_124706) do
   end
 
   create_table "tweet_imgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "tweet_id", default: 0, null: false
     t.string "source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "tweet_id"
     t.index ["tweet_id"], name: "index_tweet_imgs_on_tweet_id"
   end
 
   create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
@@ -95,6 +88,6 @@ ActiveRecord::Schema.define(version: 2019_12_18_124706) do
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "tweets"
   add_foreign_key "likes", "users"
-  add_foreign_key "tweet_imgs", "tweets", on_delete: :cascade
-  add_foreign_key "tweets", "users", on_delete: :cascade
+  add_foreign_key "tweet_imgs", "tweets"
+  add_foreign_key "tweets", "users"
 end
