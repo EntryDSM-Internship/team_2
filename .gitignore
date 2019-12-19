@@ -8,21 +8,28 @@
 /.bundle
 
 # Ignore .idea
-.idea
+/.idea
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+/log/*.log
+/tmp
 !/log/.keep
 !/tmp/.keep
+.ruby-version
 
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 .byebug_history
+/log
+/path
+/public/uploads
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
 # Ignore application configuration
 /config/application.yml
+.DS_store
+
+.idea

@@ -27,7 +27,7 @@ class JwtExtended < ApplicationRecord
 
 
   def get_jwt_payload(token)
-    token = token.to_s
+    token = token.to_s[7..]
     begin
       payload = JWT.decode(token, @@secret_key, @@algorithm)
     rescue JWT::ExpiredSignature

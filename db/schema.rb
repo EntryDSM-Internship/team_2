@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_024427) do
+ActiveRecord::Schema.define(version: 2019_12_18_124706) do
 
   create_table "change_passwords", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 2019_12_03_024427) do
   end
 
   create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "follower_id", null: false
-    t.bigint "following_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "following_id"
+    t.integer "follower_id"
+    t.boolean "accepted", default: false
+    t.index ["follower_id", "following_id"], name: "index_follows_on_follower_id_and_following_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
     t.index ["following_id"], name: "index_follows_on_following_id"
   end
@@ -41,6 +43,16 @@ ActiveRecord::Schema.define(version: 2019_12_03_024427) do
   create_table "jwt_extendeds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tweet_id", "user_id"], name: "index_likes_on_tweet_id_and_user_id", unique: true
+    t.index ["tweet_id"], name: "index_likes_on_tweet_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "temp_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -53,19 +65,18 @@ ActiveRecord::Schema.define(version: 2019_12_03_024427) do
   end
 
   create_table "tweet_imgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "tweet_id", default: 0, null: false
     t.string "source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tweet_id"
     t.index ["tweet_id"], name: "index_tweet_imgs_on_tweet_id"
   end
 
   create_table "tweets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "content", null: false
-    t.integer "like", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
@@ -77,12 +88,13 @@ ActiveRecord::Schema.define(version: 2019_12_03_024427) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "profile_img"
     t.boolean "verified", default: false
+    t.timestamp "sended_at"
   end
 
   add_foreign_key "comments", "tweets"
   add_foreign_key "comments", "users"
-  add_foreign_key "follows", "users", column: "follower_id"
-  add_foreign_key "follows", "users", column: "following_id"
-  add_foreign_key "tweet_imgs", "tweets"
-  add_foreign_key "tweets", "users"
+  add_foreign_key "likes", "tweets"
+  add_foreign_key "likes", "users"
+  add_foreign_key "tweet_imgs", "tweets", on_delete: :cascade
+  add_foreign_key "tweets", "users", on_delete: :cascade
 end

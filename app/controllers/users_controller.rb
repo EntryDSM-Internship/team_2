@@ -1,30 +1,33 @@
 class UsersController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required, only: %i[show
+  before_action :jwt_required, only: %i[
                                         show_many
                                         edit_emailcheck
                                         edit_emailcheck_complete
                                         update]
 
   def show
-    # return render status: 400 unless params[:userId]
-    #
-    # user = User.find_by_id(params[:userId])
-    # return render status: 404 unless user
-    # TO BE CONTINUED
+    user = User.find_by_id(params[:userId])
+    return render status: 404 unless user
+
+    render json: { name: user.name,
+                   email: user.email,
+                   following: Follow.find_by_following_id(params[:userId]).count,
+                   follower: Follow.find_by_follower_id(params[:userId]).count,
+                   profile_img: user.profile_img,
+                   tweets: user.tweets.ids[0..9] },
+           status: 200
   end
 
   def show_many
     return render status: 400 unless params[:name]
 
-    user_list = Hash.new
-    cnt = 1
+    user_list = []
     User.where('name LIKE ?', "%#{params[:name]}%").each do |user|
-      user_list[cnt] = { user_id: user.id, name: user.name }
-      cnt += 1
+      user_list.append(user_id: user.id, name: user.name)
     end
 
-    render status: 404 if user_list.blank?
+    render status: 404 unless user_list
     render json: user_list, status: 200
   end
 
@@ -51,9 +54,9 @@ class UsersController < ApplicationController
   end
 
   def emailcheck_get
-    return render status: 400 if params[:email].blank?
+    return render status: 400 unless params[:email]
 
-    if User.find_by_email(params[:email])
+    if User.find_by_email(params[:email]).blank?
       render status: 204
     else
       render status: 409
@@ -61,11 +64,11 @@ class UsersController < ApplicationController
   end
 
   def emailcheck_post
-    return render status: 400 if params[:authCode].blank?
+    return render status: 400 unless params[:authCode]
 
     temp_user = TempUser.find_by_auth_code(params[:authCode])
 
-    if temp_user.created_at.to_i + 10.minutes.to_i < Time.now.to_i
+    if temp_user.updated_at.to_i + 10.minutes.to_i < Time.now.to_i
       return render status: 408
     end
 
@@ -84,7 +87,7 @@ class UsersController < ApplicationController
     end
 
     temp_user = TempUser.find_by_id(params[:tempUserId])
-    return render status: 404 if temp_user.nil?
+    return render status: 404 unless temp_user
 
     if temp_user.verified
       User.create!(name: temp_user.name,
@@ -99,28 +102,30 @@ class UsersController < ApplicationController
   end
 
   def edit_emailcheck
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     auth_code = create_auth_code
-    AuthMailer.send_auth_code(User.find_by_id(payload['user_id']).email,
+    user = User.find_by_id(payload['user_id'])
+    AuthMailer.send_auth_code(user.email,
                               auth_code).deliver_later
-    render json: { access_code: @@jwt_extended.create_access_token(payload['auth_code'] += auth_code) },
+    user.sended_at = Time.now
+    user.save
+    payload['auth_code'] = auth_code
+    render json: { access_code: @@jwt_extended.create_access_token(payload) },
            status: 200
   end
 
   def edit_emailcheck_complete
-    return render status: 400 if params[:authCode].blank?
+    return render status: 400 unless params[:authCode]
     return render status: 412 unless params[:authCode] == payload['auth_code']
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
     user = User.find_by_id(payload['user_id'])
 
-    if user.created_at.to_i + 10.minutes.to_i < Time.now.to_i
+    if user.sended_at.to_i + 10.minutes.to_i < Time.now.to_i
       return render status: 408
     end
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
-    user = User.find_by_id(payload['user_id'])
     user.verified = true
     user.save
 
@@ -128,16 +133,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    unless params[:newName].blank? || params[:newPassword].blank?
+    if params[:newName].blank? && params[:newPassword].blank?
       return render status: 400
     end
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization[7..])
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
 
     if params[:newName]
       user.name = params[:newName]
-      user.save
     end
 
     if params[:newPassword]
@@ -145,9 +149,15 @@ class UsersController < ApplicationController
 
       user.password = params[:newPassword]
       user.verified = false
-      user.save
     end
 
+    if params[:newProfileImg]
+      user.profile_img = params[:newProfileImg]
+    else
+      user.profile_img = ''
+    end
+
+    user.save
     render status: 200
   end
 end
