@@ -3,7 +3,7 @@ class TweetsController < ApplicationController
   before_action :jwt_required
 
   def show
-    tweet = Tweet.find_by_id(params[:tweetid])
+    tweet = Tweet.find_by_id(params[:tweetId])
     return render status: 404 unless tweet
 
     comments = []
