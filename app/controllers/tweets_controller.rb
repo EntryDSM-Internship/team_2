@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required
+  before_action :jwt_required, only: %i[create like_post]
 
   def show
     tweet = Tweet.find_by_id(params[:tweetId])
