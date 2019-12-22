@@ -3,6 +3,8 @@ class TweetsController < ApplicationController
   before_action :jwt_required, only: %i[create like_post]
 
   def show
+    return render status: 400 unless params[:tweetId]
+
     tweet = Tweet.find_by_id(params[:tweetId])
     return render status: 404 unless tweet
 
@@ -26,10 +28,9 @@ class TweetsController < ApplicationController
   end
 
   def show_many
-    return render status: 400 unless params[:page]
+    return render status: 400 if params[:page].nil? || params[:userId].nil?
 
-    payload = @@jwt_extended.get_jwt_payload(request.authorization)
-    user = User.find_by_id(payload['user_id'])
+    user = User.find_by_id(params[:userId])
 
     tweets = []
     user.tweets.order(created_at: :desc).limit(10 * params[:page]).each do |tweet|
