@@ -18,7 +18,8 @@ class TweetsController < ApplicationController
       imgs.append(img.id)
     end
 
-    render json: { user_profile_img: tweet.user.profile_img,
+    render json: { content: tweet.content,
+                   user_profile_img: tweet.user.profile_img,
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
                    images: imgs,
