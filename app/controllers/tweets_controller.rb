@@ -28,12 +28,12 @@ class TweetsController < ApplicationController
   end
 
   def show_many
-    return render status: 400 if params[:page].nil? || params[:userId].nil?
+    return render status: 400 unless params[:page]
 
     user = User.find_by_id(params[:userId])
 
     tweets = []
-    user.tweets.order(created_at: :desc).limit(10 * params[:page]).each do |tweet|
+    user.tweets.order(created_at: :desc).limit(10 * params[:page].to_i).each do |tweet|
       tweets.append(tweet.id)
     end
 
