@@ -61,11 +61,12 @@ class FollowsController < ApplicationController
     rescue ActiveRecord::RecordNotUnique
       return render status: 409
     end
+
     render status: 201
   end
 
   def update
-    return render status: 400 if params[:accepted].nil?
+    return render status: 400 unless params[:accepted]
 
     follow = Follow.find_by_id(params[:tweetId])
     return render status: 404 unless follow
@@ -76,6 +77,7 @@ class FollowsController < ApplicationController
     else
       follow.destroy!
     end
+
     render status: 204
   end
 end

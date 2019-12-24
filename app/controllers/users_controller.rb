@@ -93,7 +93,10 @@ class UsersController < ApplicationController
                    profile_img: '')
       temp_user.destroy
 
-      Follow.create!(follower_id: User.first.id, following_id: User.first.id)
+      Follow.create!(follower_id: User.first.id,
+                     following_id: User.first.id,
+                     accepted: true)
+
       render status: 201
     else
       render status: 403
