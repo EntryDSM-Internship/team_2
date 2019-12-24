@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required, only: %i[create like_post]
+  before_action :jwt_required, only: %i[create like_post timeline_get]
 
   def show
     return render status: 400 unless params[:tweetId]
