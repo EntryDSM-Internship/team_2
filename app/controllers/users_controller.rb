@@ -92,6 +92,8 @@ class UsersController < ApplicationController
                    password: params[:password],
                    profile_img: '')
       temp_user.destroy
+
+      Follow.create!(follower_id: User.first.id, following_id: User.first.id)
       render status: 201
     else
       render status: 403
