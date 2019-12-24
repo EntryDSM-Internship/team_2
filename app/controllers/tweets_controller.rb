@@ -8,15 +8,8 @@ class TweetsController < ApplicationController
     tweet = Tweet.find_by_id(params[:tweetId])
     return render status: 404 unless tweet
 
-    comments = []
-    tweet.comments.each do |comment|
-      comments.append(comment.id)
-    end
-
-    imgs = []
-    tweet.tweet_imgs.each do |img|
-      imgs.append(img.id)
-    end
+    comments = tweet.comments.ids
+    imgs = tweet.tweet_imgs.ids
 
     render json: { content: tweet.content,
                    user_profile_img: tweet.user.profile_img,
@@ -32,13 +25,23 @@ class TweetsController < ApplicationController
     return render status: 400 unless params[:page]
 
     user = User.find_by_id(params[:userId])
+    tweets = user.tweets.order(created_at: :desc).limit(10).offset(10 * params[:page].to_i).ids
 
-    tweets = []
-    user.tweets.order(created_at: :desc).limit(10 * params[:page].to_i).each do |tweet|
-      tweets.append(tweet.id)
-    end
+    render json: { tweets: tweets },
+           status: 200
+  end
 
-    render json: { tweets: tweets }
+  def timeline_get
+    return render status: 400 unless params[:page]
+
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    followers = Follow.where(following_id: payload['user_id']).ids
+    tweets = Tweet.where(user_id: followers).order(created_at: :desc)
+                  .offset(10 * params[:page].to_i).ids
+
+    render json: { tweets: tweets },
+           status: 200
   end
 
   def create
