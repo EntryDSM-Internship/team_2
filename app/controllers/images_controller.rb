@@ -11,10 +11,7 @@ class ImagesController < ApplicationController
     tweet = Tweet.find_by_id(params[:tweetId])
     render status: 404 unless tweet
 
-    imgs = []
-    tweet.tweet_imgs.each do |tweet_img|
-      imgs.append(tweet_img.id)
-    end
+    imgs = tweet.tweet_imgs.ids
 
     render json: { imgs: imgs },
            status: 200

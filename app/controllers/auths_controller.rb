@@ -8,7 +8,8 @@ class AuthsController < ApplicationController
 
     if user.authenticate(params[:password])
       render json: { access_token: @@jwt_extended.create_access_token(user_id: user.id),
-                     refresh_token: @@jwt_extended.create_refresh_token(user_id: user.id) },
+                     refresh_token: @@jwt_extended.create_refresh_token(user_id: user.id),
+                     user_id: user.id },
              status: 200
     else
       render status: 401

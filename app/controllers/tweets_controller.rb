@@ -1,40 +1,47 @@
 class TweetsController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required
+  before_action :jwt_required, only: %i[create like_post timeline_get]
 
   def show
-    tweet = Tweet.find_by_id(params[:tweetid])
+    return render status: 400 unless params[:tweetId]
+
+    tweet = Tweet.find_by_id(params[:tweetId])
     return render status: 404 unless tweet
 
-    comments = []
-    tweet.comments.each do |comment|
-      comments.append(comment.id)
-    end
+    comments = tweet.comments.ids
+    imgs = tweet.tweet_imgs.ids
 
-    imgs = []
-    tweet.tweet_imgs.each do |img|
-      imgs.append(img.id)
-    end
-
-    render json: { user_profile_img: tweet.user.profile_img,
+    render json: { content: tweet.content,
+                   user_profile_img: tweet.user.profile_img,
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
                    images: imgs,
-                   like: '',
+                   like: tweet.likes.count,
                    comments: comments },
            status: 200
   end
 
   def show_many
+    return render status: 400 unless params[:page]
+
+    user = User.find_by_id(params[:userId])
+    tweets = user.tweets.order(created_at: :desc).limit(10).offset(10 * params[:page].to_i).ids
+
+    render json: { tweets: tweets },
+           status: 200
+  end
+
+  def timeline_get
+    return render status: 400 unless params[:page]
+
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
-    user = User.find_by_id(payload['user_id'])
 
-    tweets = []
-    user.tweets.order(created_at: :desc).limit(10).each do |tweet|
-      tweets.append(tweet.id)
-    end
+    followers = Follow.where(following_id: payload['user_id']).ids
+    tweets = Tweet.where(user_id: followers).order(created_at: :desc)
+                  .offset(10 * params[:page].to_i).ids
 
-    render json: { tweets: tweets }
+    render json: { tweets: tweets },
+           status: 200
   end
 
   def create
@@ -77,7 +84,7 @@ class TweetsController < ApplicationController
     tweet = Tweet.find_by_id(params[:tweetId])
 
     return render status: 404 unless tweet
-    
+
     begin
       tweet.likes.create!(user_id: user.id)
     rescue ActiveRecordError::RecordNotUnique
