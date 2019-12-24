@@ -22,10 +22,7 @@ class UsersController < ApplicationController
   def show_many
     return render status: 400 unless params[:name]
 
-    user_list = []
-    User.where('name LIKE ?', "%#{params[:name]}%").each do |user|
-      user_list.append(user_id: user.id, name: user.name)
-    end
+    user_list = User.where('name LIKE ?', "%#{params[:name]}%").ids
 
     render status: 404 unless user_list
     render json: user_list, status: 200
@@ -139,10 +136,7 @@ class UsersController < ApplicationController
 
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     user = User.find_by_id(payload['user_id'])
-
-    if params[:newName]
-      user.name = params[:newName]
-    end
+    user.name = params[:newName] if params[:newName]
 
     if params[:newPassword]
       return render status: 428 unless user.verified
