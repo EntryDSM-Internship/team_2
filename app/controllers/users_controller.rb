@@ -12,8 +12,8 @@ class UsersController < ApplicationController
 
     render json: { name: user.name,
                    email: user.email,
-                   following: Follow.where(following_id: params[:userId]).count,
-                   follower: Follow.where(follower_id: params[:userId]).count,
+                   following: Follow.where(following_id: params[:userId]).count - 1,
+                   follower: Follow.where(follower_id: params[:userId]).count - 1,
                    profile_img: user.profile_img,
                    tweets: user.tweets.ids[0..9] },
            status: 200
