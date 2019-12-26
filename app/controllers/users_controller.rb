@@ -17,7 +17,7 @@ class UsersController < ApplicationController
                    email: user.email,
                    following: Follow.where(following_id: params[:userId]).count - 1,
                    follower: Follow.where(follower_id: params[:userId]).count - 1,
-                   user_img,
+                   profile_img: user_img,
                    tweets: user.tweets.ids[0..9] },
            status: 200
   end
