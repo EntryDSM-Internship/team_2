@@ -33,20 +33,33 @@ class FollowsController < ApplicationController
   def follow_status_get
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
+    following_user = []
+    follower_user = []
+
     begin
-      following_list = Follow.where(following_id: payload['user_id'], accepted: false).ids
+      following_list = Follow.where(following_id: payload['user_id'], accepted: false)
+
+      following_list.each do |following|
+        following_user.append(following.follower_id)
+      end
+
     rescue NoMethodError
-      following_list = nil
+      following_user = nil
     end
 
     begin
-    follower_list = Follow.where(follower_id: payload['user_id'], accepted: false).ids
-    rescue NoMethodError
-      follower_list = nil
+    follower_list = Follow.where(follower_id: payload['user_id'], accepted: false)
+
+    follower_list.each do |follower|
+      follower_user.append(follower.following_id)
     end
 
-    render json: { following: following_list,
-                   follower: follower_list },
+    rescue NoMethodError
+      follower_user = nil
+    end
+
+    render json: { following: following_user,
+                   follower: follower_user },
            status: 200
   end
 

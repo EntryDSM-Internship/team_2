@@ -10,11 +10,14 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:userId])
     return render status: 404 unless user
 
+    user_img = user.user_imgs.last
+    user_img ||= user.profile_img
+
     render json: { name: user.name,
                    email: user.email,
                    following: Follow.where(following_id: params[:userId]).count - 1,
                    follower: Follow.where(follower_id: params[:userId]).count - 1,
-                   profile_img: user.profile_img,
+                   profile_img: user_img,
                    tweets: user.tweets.ids[0..9] },
            status: 200
   end
@@ -90,7 +93,7 @@ class UsersController < ApplicationController
       User.create!(name: temp_user.name,
                    email: temp_user.email,
                    password: params[:password],
-                   profile_img: '')
+                   profile_img: '/uploads/tweet_img/source/0/default_profile_400x400.png')
       temp_user.destroy
 
       Follow.create!(follower_id: User.last.id,
@@ -150,11 +153,7 @@ class UsersController < ApplicationController
       user.verified = false
     end
 
-    if params[:newProfileImg]
-      user.profile_img = params[:newProfileImg]
-    else
-      user.profile_img = ''
-    end
+    user.user_imgs.create!(source: params[:newProfileImg])
 
     user.save
     render status: 200

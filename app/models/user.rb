@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :tweets, dependent: :delete_all
   has_many :comments
+  has_many :user_imgs
   has_many :follower_relations, foreign_key: 'following_id', class_name: 'Follow'
   has_many :followers, through: :follower_relations, source: :follower
 

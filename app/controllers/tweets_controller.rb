@@ -36,8 +36,8 @@ class TweetsController < ApplicationController
 
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
-    followers = Follow.where(following_id: payload['user_id']).ids
-    tweets = Tweet.where(user_id: followers, accepted: true).order(created_at: :desc)
+    followers = Follow.where(following_id: payload['user_id'], accepted: true).ids
+    tweets = Tweet.where(user_id: followers).order(created_at: :desc)
                   .offset(10 * params[:page].to_i).ids
 
     render json: { tweets: tweets },
