@@ -93,7 +93,7 @@ class UsersController < ApplicationController
       User.create!(name: temp_user.name,
                    email: temp_user.email,
                    password: params[:password],
-                   profile_img: '/uploads/tweet_img/source/0/default_profile_400x400.png')
+                   profile_img: '/uploads/tmp/default_profile_400x400.png')
       temp_user.destroy
 
       Follow.create!(follower_id: User.last.id,
