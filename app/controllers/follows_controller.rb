@@ -79,13 +79,16 @@ class FollowsController < ApplicationController
   end
 
   def update
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
     return render status: 400 unless params[:accepted]
 
-    follow = Follow.find_by_id(params[:tweetId])
+    follow = Follow.find_by_follower_id_and_following_id(payload['user_id'],
+                                                         params[:userId])
     return render status: 404 unless follow
 
     if params[:accepted]
-      follow.accepted = true
+      follow.accepted = params[:accepted]
       follow.save
     else
       follow.destroy!
