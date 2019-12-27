@@ -10,8 +10,8 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:userId])
     return render status: 404 unless user
 
-    user_img = user.user_imgs.last.source if user.user_imgs.last
-    user_img ||= { url: user.profile_img }
+    user_img = { profile_img: user.user_imgs.last.source } if user.user_imgs.last
+    user_img ||= { profile_img: user.profile_img }
 
     render json: { name: user.name,
                    email: user.email,
