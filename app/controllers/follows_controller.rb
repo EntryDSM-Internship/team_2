@@ -83,7 +83,7 @@ class FollowsController < ApplicationController
 
     return render status: 400 unless params[:accepted]
 
-    follow = Follow.find_by_follower_id_and_following_id(payload['user_id'],
+    follow = Follow.find_by_following_id_and_follower_id(payload['user_id'],
                                                          params[:userId])
     return render status: 404 unless follow
 
