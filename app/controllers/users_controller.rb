@@ -96,7 +96,7 @@ class UsersController < ApplicationController
                      following_id: User.last.id,
                      accepted: true)
 
-      User.last.user_imgs.create!(source: File.open('public/uploads/tmp/default_profile_400x400.png', 'r'))
+      User.last.user_imgs.create!(source: File.open('public/uploads/tmp/default.jpg', 'r'))
 
       render status: 201
     else
