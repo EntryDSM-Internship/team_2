@@ -10,14 +10,13 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:userId])
     return render status: 404 unless user
 
-    user_img = { profile_img: user.user_imgs.last.source } if user.user_imgs.last
-    user_img ||= { profile_img: user.profile_img }
+    user_profile = user.user_imgs.last.source
 
     render json: { name: user.name,
                    email: user.email,
                    following: Follow.where(following_id: params[:userId]).count - 1,
                    follower: Follow.where(follower_id: params[:userId]).count - 1,
-                   tweets: user.tweets.ids[0..9] }.merge(user_img),
+                   tweets: user.tweets.ids[0..9] }.merge(user_profile),
            status: 200
   end
 
@@ -91,20 +90,20 @@ class UsersController < ApplicationController
     if temp_user.verified
       User.create!(name: temp_user.name,
                    email: temp_user.email,
-                   password: params[:password],
-                   profile_img: '/uploads/tmp/default_profile_400x400.png')
+                   password: params[:password])
       temp_user.destroy
 
       Follow.create!(follower_id: User.last.id,
                      following_id: User.last.id,
                      accepted: true)
 
+      User.last.user_imgs.create!(source: File.new('public/uploads/tmp/default_profile_400x400.png', 'w'))
+
       render status: 201
     else
       render status: 403
     end
   end
-
   def edit_emailcheck
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     auth_code = create_auth_code
@@ -137,7 +136,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if params[:newName].blank? && params[:newPassword].blank?
+    if params[:newName].blank? && params[:newPassword].blank? && params[:newProfileImg].blank?
       return render status: 400
     end
 
@@ -152,9 +151,12 @@ class UsersController < ApplicationController
       user.verified = false
     end
 
-    user.user_imgs.create!(source: params[:newProfileImg])
-
     user.save
+
+    if params[:newProfileImg]
+      user.user_imgs.create!(source: params[:newProfileImg])
+    end
+
     render status: 200
   end
 end

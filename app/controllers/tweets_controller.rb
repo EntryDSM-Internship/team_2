@@ -12,12 +12,11 @@ class TweetsController < ApplicationController
     imgs = tweet.tweet_imgs.ids
 
     render json: { content: tweet.content,
-                   user_profile_img: tweet.user.profile_img,
                    user_name: tweet.user.name,
                    writed_at: tweet.created_at,
                    images: imgs,
                    like: tweet.likes.count,
-                   comments: comments },
+                   comments: comments }.merge(tweet.user.user_imgs.last.source),
            status: 200
   end
 

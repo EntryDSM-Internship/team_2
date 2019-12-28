@@ -9,5 +9,4 @@ class User < ApplicationRecord
   has_many :followings, through: :following_relations, source: :following
 
   has_secure_password
-  mount_uploader :profile_img, ImageUploader
 end
