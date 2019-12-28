@@ -10,7 +10,11 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:userId])
     return render status: 404 unless user
 
-    user_profile = user.user_imgs.last.source
+    user_profile = if user.user_imgs.last
+                     user.user_imgs.last.source
+                   else
+                     { url: '/uploads/tmp/default_profile_400x400.png' }
+                   end
 
     render json: { name: user.name,
                    email: user.email,
@@ -97,8 +101,6 @@ class UsersController < ApplicationController
       Follow.create!(follower_id: User.last.id,
                      following_id: User.last.id,
                      accepted: true)
-
-      User.last.user_imgs.create!(source: File.new('public/uploads/tmp/default_profile_400x400.png', 'w'))
 
       render status: 201
     else

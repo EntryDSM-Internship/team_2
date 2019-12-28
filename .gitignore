@@ -25,6 +25,7 @@
 /path
 /public/uploads/temp
 /public/uploads/tweet_img
+/public/uploads/user_img
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
