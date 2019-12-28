@@ -16,7 +16,7 @@ class TweetsController < ApplicationController
                    writed_at: tweet.created_at,
                    images: imgs,
                    like: tweet.likes.count,
-                   comments: comments }.merge(tweet.user.user_imgs.last.source),
+                   comments: comments },
            status: 200
   end
 
