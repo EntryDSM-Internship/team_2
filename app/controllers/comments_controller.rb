@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
     return render status: 404 unless comment
 
     render json: { user_name: comment.user.name,
-                   profile_img: comment.user.profile_img,
+                   profile_img: comment.user.user_imgs.last,
                    comment: comment.comment,
                    writed_at: comment.created_at },
            status: 200
