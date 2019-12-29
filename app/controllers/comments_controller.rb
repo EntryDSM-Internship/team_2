@@ -18,7 +18,12 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    Comment.find_by_id(params[:commentId]).destroy!
+    user = @@jwt_extended.get_jwt_payload(request.authorization)
+    comment = Comment.find_by_id(params[:commentId])
+
+    return render status: 403 if comment.user.id != user['user_id']
+
+    comment.destroy!
     render status: 200
   end
 
