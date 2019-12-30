@@ -1,9 +1,11 @@
 class TweetsController < ApplicationController
   before_action :jwt_init
-  before_action :jwt_required, only: %i[create like_post timeline_get]
+  before_action :jwt_required, only: %i[show show_many create like_post timeline_get]
 
   def show
     return render status: 400 unless params[:tweetId]
+
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
     tweet = Tweet.find_by_id(params[:tweetId])
     return render status: 404 unless tweet
@@ -11,12 +13,14 @@ class TweetsController < ApplicationController
     comments = tweet.comments.ids
     imgs = tweet.tweet_imgs.ids
 
+
     render json: { content: tweet.content,
                    user_name: tweet.user.name,
                    user_profile: tweet.user.user_imgs.last.source,
                    writed_at: tweet.created_at,
                    images: imgs,
                    like: tweet.likes.count,
+                   liked?: !tweet.likes.find_by_user_id(payload['user_id']).nil?,
                    comments: comments },
            status: 200
   end
