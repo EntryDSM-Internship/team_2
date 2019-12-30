@@ -99,8 +99,10 @@ class TweetsController < ApplicationController
 
     begin
       tweet.likes.create!(user_id: user.id)
-    rescue ActiveRecordError::RecordNotUnique
+    rescue ActiveRecord::RecordNotUnique
       tweet.likes.find_by_user_id(user.id).destroy!
     end
+
+    render status: 200
   end
 end
