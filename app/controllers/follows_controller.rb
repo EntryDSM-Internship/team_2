@@ -12,6 +12,8 @@ class FollowsController < ApplicationController
       follower_users.append(follower_user.following_id)
     end
 
+    follower_users.delete(payload['user_id'])
+
     render json: { follower_users: follower_users },
            status: 200
   end
@@ -25,6 +27,8 @@ class FollowsController < ApplicationController
     following_users_hash.each do |following_user|
       following_users.append(following_user.follower_id)
     end
+
+    following_users.delete(payload['user_id'])
 
     render json: { following_users: following_users },
            status: 200
