@@ -22,7 +22,13 @@ class UsersController < ApplicationController
   def show_many
     return render status: 400 unless params[:name]
 
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
     user_list = User.where('name LIKE ?', "%#{params[:name]}%").ids
+
+    if user_list.include?(payload['user_id'])
+      user_list.delete(payload['user_id'])
+    end
 
     render status: 404 unless user_list
     render json: user_list, status: 200
