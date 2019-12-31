@@ -15,6 +15,7 @@ class TweetsController < ApplicationController
 
 
     render json: { content: tweet.content,
+                   user_id: tweet.user.id,
                    user_name: tweet.user.name,
                    user_profile: tweet.user.user_imgs.last.source,
                    writed_at: tweet.created_at,
