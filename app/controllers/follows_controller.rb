@@ -9,7 +9,7 @@ class FollowsController < ApplicationController
     follower_users_hash = Follow.where(follower_id: payload['user_id'],
                                        accepted: true)
     follower_users_hash.each do |follower_user|
-      follower_users.append(follower_user.follower_id)
+      follower_users.append(follower_user.following_id)
     end
 
     render json: { follower_users: follower_users },
