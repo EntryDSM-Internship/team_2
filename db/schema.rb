@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_124706) do
+ActiveRecord::Schema.define(version: 2019_12_28_034405) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "tweet_id", null: false
@@ -73,13 +73,20 @@ ActiveRecord::Schema.define(version: 2019_12_18_124706) do
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
+  create_table "user_imgs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "source", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_imgs_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "profile_img"
     t.boolean "verified", default: false
     t.timestamp "sended_at"
   end
@@ -90,4 +97,5 @@ ActiveRecord::Schema.define(version: 2019_12_18_124706) do
   add_foreign_key "likes", "users"
   add_foreign_key "tweet_imgs", "tweets"
   add_foreign_key "tweets", "users"
+  add_foreign_key "user_imgs", "users"
 end

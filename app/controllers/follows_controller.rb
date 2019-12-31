@@ -33,20 +33,33 @@ class FollowsController < ApplicationController
   def follow_status_get
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
+    following_user = []
+    follower_user = []
+
     begin
-      following_list = Follow.where(following_id: payload['user_id'], accepted: false).ids
+      following_list = Follow.where(following_id: payload['user_id'], accepted: false)
+
+      following_list.each do |following|
+        following_user.append(following.follower_id)
+      end
+
     rescue NoMethodError
-      following_list = nil
+      following_user = nil
     end
 
     begin
-    follower_list = Follow.where(follower_id: payload['user_id'], accepted: false).ids
-    rescue NoMethodError
-      follower_list = nil
+    follower_list = Follow.where(follower_id: payload['user_id'], accepted: false)
+
+    follower_list.each do |follower|
+      follower_user.append(follower.following_id)
     end
 
-    render json: { following: following_list,
-                   follower: follower_list },
+    rescue NoMethodError
+      follower_user = nil
+    end
+
+    render json: { following: following_user,
+                   follower: follower_user },
            status: 200
   end
 
@@ -61,21 +74,26 @@ class FollowsController < ApplicationController
     rescue ActiveRecord::RecordNotUnique
       return render status: 409
     end
+
     render status: 201
   end
 
   def update
-    return render status: 400 if params[:accepted].nil?
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
-    follow = Follow.find_by_id(params[:tweetId])
+    return render status: 400 unless params[:accepted]
+
+    follow = Follow.find_by_following_id_and_follower_id(params[:userId],
+                                                         payload['user_id'])
     return render status: 404 unless follow
 
     if params[:accepted]
-      follow.accepted = true
+      follow.accepted = params[:accepted]
       follow.save
     else
       follow.destroy!
     end
+
     render status: 204
   end
 end

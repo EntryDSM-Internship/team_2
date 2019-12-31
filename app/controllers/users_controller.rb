@@ -12,9 +12,9 @@ class UsersController < ApplicationController
 
     render json: { name: user.name,
                    email: user.email,
-                   following: Follow.find_by_following_id(params[:userId]).count,
-                   follower: Follow.find_by_follower_id(params[:userId]).count,
-                   profile_img: user.profile_img,
+                   user_profile: user.user_imgs.last,
+                   following: Follow.where(following_id: params[:userId]).count - 1,
+                   follower: Follow.where(follower_id: params[:userId]).count - 1,
                    tweets: user.tweets.ids[0..9] },
            status: 200
   end
@@ -89,15 +89,20 @@ class UsersController < ApplicationController
     if temp_user.verified
       User.create!(name: temp_user.name,
                    email: temp_user.email,
-                   password: params[:password],
-                   profile_img: '')
+                   password: params[:password])
       temp_user.destroy
+
+      Follow.create!(follower_id: User.last.id,
+                     following_id: User.last.id,
+                     accepted: true)
+
+      User.last.user_imgs.create!(source: File.open('public/uploads/tmp/default.jpg', 'r'))
+
       render status: 201
     else
       render status: 403
     end
   end
-
   def edit_emailcheck
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
     auth_code = create_auth_code
@@ -130,7 +135,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if params[:newName].blank? && params[:newPassword].blank?
+    if params[:newName].blank? && params[:newPassword].blank? && params[:newProfileImg].blank?
       return render status: 400
     end
 
@@ -145,13 +150,12 @@ class UsersController < ApplicationController
       user.verified = false
     end
 
+    user.save
+
     if params[:newProfileImg]
-      user.profile_img = params[:newProfileImg]
-    else
-      user.profile_img = ''
+      user.user_imgs.create!(source: params[:newProfileImg])
     end
 
-    user.save
     render status: 200
   end
 end

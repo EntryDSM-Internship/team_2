@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   post '/edit/emailcheck/complete', to: 'users#edit_emailcheck_complete'
 
   # follows controller
-  put '/follow/:followId', to: 'follows#update'
-  patch '/follow/:followId', to: 'follows#update'
+  put '/follow/:userId', to: 'follows#update'
+  patch '/follow/:userId', to: 'follows#update'
   get '/follow/status', to: 'follows#follow_status_get'
   get '/follower', to: 'follows#follower_get'
   get '/following', to: 'follows#following_get'
