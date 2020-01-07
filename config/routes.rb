@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get '/follower', to: 'follows#follower_get'
   get '/following', to: 'follows#following_get'
   post '/following', to: 'follows#following_post'
+  delete '/follow/following/:userId', to: 'follows#destroy_following'
+  delete '/follow/follower/:userId', to: 'follows#destroy_follower'
 
   # auth controller
   resource :auth, controller: 'auths', only: %i[create update]

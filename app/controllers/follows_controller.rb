@@ -100,4 +100,30 @@ class FollowsController < ApplicationController
 
     render status: 204
   end
+
+  def destroy_following
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    follow = Follow.where(follower_id: payload['user_id'],
+                          following_id: params[:userId])
+
+    if follow
+      follow.destroy!
+    else
+      render status: 404
+    end
+  end
+
+  def destroy_follower
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    follow = Follow.where(following_id: payload['user_id'],
+                          follower_id: params[:userId])
+
+    if follow
+      follow.destroy!
+    else
+      render status: 404
+    end
+  end
 end
