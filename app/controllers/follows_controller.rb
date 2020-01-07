@@ -107,7 +107,7 @@ class FollowsController < ApplicationController
     follow = Follow.where(follower_id: payload['user_id'],
                           following_id: params[:userId])
 
-    if follow
+    if !follow.nil?
       follow.destroy!
     else
       render status: 404
