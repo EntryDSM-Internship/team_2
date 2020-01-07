@@ -85,8 +85,6 @@ class FollowsController < ApplicationController
   def update
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
-    return render status: 400 unless params[:accepted]
-
     follow = Follow.find_by_following_id_and_follower_id(params[:userId],
                                                          payload['user_id'])
     return render status: 404 unless follow
@@ -120,7 +118,7 @@ class FollowsController < ApplicationController
     follow = Follow.where(following_id: payload['user_id'],
                           follower_id: params[:userId])
 
-    if follow
+    if !follow.nil?
       follow.destroy!
     else
       render status: 404
