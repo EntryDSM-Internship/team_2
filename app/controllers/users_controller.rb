@@ -7,22 +7,33 @@ class UsersController < ApplicationController
                                         update]
 
   def show
+    return render status: 400 unless params[:page]
+
     user = User.find_by_id(params[:userId])
     return render status: 404 unless user
 
     render json: { name: user.name,
                    email: user.email,
                    user_profile: user.user_imgs.last,
-                   following: Follow.where(following_id: params[:userId]).count - 1,
-                   follower: Follow.where(follower_id: params[:userId]).count - 1,
-                   tweets: user.tweets.ids[0..9] },
+                   following: Follow.where(following_id: params[:userId],
+                                           accepted: true).count - 1,
+                   follower: Follow.where(follower_id: params[:userId],
+                                          accepted: true).count - 1,
+                   tweets: user.tweets.order(created_at: :desc).limit(10)
+                               .offset(10 * params[:page].to_i).ids },
            status: 200
   end
 
   def show_many
     return render status: 400 unless params[:name]
 
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
     user_list = User.where('name LIKE ?', "%#{params[:name]}%").ids
+
+    if user_list.include?(payload['user_id'])
+      user_list.delete(payload['user_id'])
+    end
 
     render status: 404 unless user_list
     render json: user_list, status: 200

@@ -9,8 +9,10 @@ class FollowsController < ApplicationController
     follower_users_hash = Follow.where(follower_id: payload['user_id'],
                                        accepted: true)
     follower_users_hash.each do |follower_user|
-      follower_users.append(follower_user.follower_id)
+      follower_users.append(follower_user.following_id)
     end
+
+    follower_users.delete(payload['user_id'])
 
     render json: { follower_users: follower_users },
            status: 200
@@ -25,6 +27,8 @@ class FollowsController < ApplicationController
     following_users_hash.each do |following_user|
       following_users.append(following_user.follower_id)
     end
+
+    following_users.delete(payload['user_id'])
 
     render json: { following_users: following_users },
            status: 200
@@ -81,8 +85,6 @@ class FollowsController < ApplicationController
   def update
     payload = @@jwt_extended.get_jwt_payload(request.authorization)
 
-    return render status: 400 unless params[:accepted]
-
     follow = Follow.find_by_following_id_and_follower_id(params[:userId],
                                                          payload['user_id'])
     return render status: 404 unless follow
@@ -95,5 +97,31 @@ class FollowsController < ApplicationController
     end
 
     render status: 204
+  end
+
+  def destroy_following
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    follow = Follow.find_by_following_id_and_follower_id(payload['user_id'],
+                                                         params[:userId])
+
+    if follow
+      follow.destroy!
+    else
+      render status: 404
+    end
+  end
+
+  def destroy_follower
+    payload = @@jwt_extended.get_jwt_payload(request.authorization)
+
+    follow = Follow.find_by_follower_id_and_following_id(payload['user_id'],
+                                                         params[:userId])
+
+    if follow
+      follow.destroy!
+    else
+      render status: 404
+    end
   end
 end
